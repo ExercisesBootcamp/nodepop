@@ -19,6 +19,19 @@ let router = express.Router();
 let mongoose = require('mongoose');
 let Commercial = mongoose.model('Commercial');
 
+// Returning data
+
+router.get('/', function (req, res) {
+    Commercial.find().exec(function (err, rows, next) {
+        if(err){
+            next(err);
+            return;
+        }
+
+        res.json({success: true, rows: rows});
+    })
+});
+
 // Adding and saving commercial´s instance
 
 router.post('/', function (req, res, next) {
