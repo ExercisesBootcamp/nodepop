@@ -11,9 +11,9 @@ let mongoose = require('mongoose');
 
 // Designing User Schema
 let userSchema = mongoose.Schema({
-    name: String,
-    email: String,
-    key: String
+    name: {type: String, index: true, required: true},
+    email: {type: String, index: true, required: true},
+    key: {type: String, required: true}
 });
 
 // Assingning schema to model
