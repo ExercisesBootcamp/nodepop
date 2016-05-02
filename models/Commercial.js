@@ -12,12 +12,28 @@ let mongoose = require('mongoose');
 
 // Designing Commercial Schema
 let commercialSchema = mongoose.Schema({
-    nombre: String,
-    venta: Boolean,
-    precio: Number,
-    foto: String,
+    nombre: {type: String, required: true},
+    venta: {type: Boolean, required: true},
+    precio: {type: Number, required: true},
+    foto: {type: String, required: true},
     tags: [String]
 });
 
-// Assingning schema to model
-mongoose.model('Commercial', commercialSchema);
+// Making a static method
+commercialSchema.statics.list = function (filter, start, limit, sort, cb) {
+    let query = Commercial.find(filter);
+    query.skip(start);
+    query.limit(limit);
+    query.sort(sort);
+    console.log(filter);
+    query.find([{precio: {$gt: filter.val}}, {precio: {$lt: filter.val2}}]);
+
+    // Executing query - returning a promise
+    return query.exec(cb);
+};
+
+
+
+
+// Assingning schema to model - Using var to use hoisting
+var Commercial = mongoose.model('Commercial', commercialSchema);

@@ -8,7 +8,7 @@
     "tags": ["lifestyle", "motor"]
   },
   {
-    "nombre": "iPhone 6",
+    "nombre": "iPhone6",
     "venta": false,
     "precio": 50.00,
     "foto": "iphone.png",

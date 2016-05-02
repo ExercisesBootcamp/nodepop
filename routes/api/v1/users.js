@@ -22,6 +22,15 @@ let User = mongoose.model('User');
 
 router.post('/', function (req, res, next) {
     let user = new User(req.body);
+
+    // Controlling fields validation
+    try {
+        var errors = user.validateSync();
+    } catch (err){
+        console.log('errors', error);
+        next(err);
+    }
+
     user.save(function (err, saved) {
         if(err){
             next(err);
