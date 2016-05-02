@@ -22,6 +22,9 @@ let router = express.Router();
 let mongoose = require('mongoose');
 let User = mongoose.model('User');
 
+// Loading error handler library
+let errors = require('../../../lib/errorHandler');
+
 // Adding and saving user´s instance
 
 router.post('/', function (req, res, next) {
@@ -46,14 +49,17 @@ router.post('/authenticate', function (req, res) {
 
     User.findOne({email: email}).exec(function(err, user){
         if(err){
-            return res.status(500).json({success: false, error: err});
+            errors('Internal server error', res.status(500));
+            return;
         }
-        if(!user){
-            return res.status(401).json({success: false, error: 'Auth failed. User not found'});
+        if(!email){
+            errors('Authentication failed. User not found', res.status(401));
+            return;
         }
 
         if(user.key !== pass){
-            return res.status(401).json({success: false, error: 'Auth failed. Invalid password'});
+            errors('Authentication failed. Invaid password', res.status(401));
+            return;
         }
 
         let token = jwt.sign({id: user._id}, config.jwt.secret, {

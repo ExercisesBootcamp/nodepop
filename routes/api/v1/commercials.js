@@ -19,12 +19,15 @@ let router = express.Router();
 let mongoose = require('mongoose');
 let Commercial = mongoose.model('Commercial');
 
+// Loading errors handler library
+let errors = require('../../../lib/errorHandler');
+
 // Returning data
 
 router.get('/', function (req, res) {
     Commercial.find().exec(function (err, rows, next) {
         if(err){
-            next(err);
+            errors('Not found', res.status(404));
             return;
         }
 
@@ -38,7 +41,7 @@ router.post('/', function (req, res, next) {
     let commercial = new Commercial(req.body);
     commercial.save(function (err, saved) {
         if(err){
-            next(err);
+            errors('Validation error. One or more required fields haven´t been inserted', res.status(500));
             return;
         }
 

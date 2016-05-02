@@ -14,7 +14,7 @@ let mongoose = require('mongoose');
 let commercialSchema = mongoose.Schema({
     nombre: String,
     venta: Boolean,
-    precio: Number,
+    precio: {type: Number, required: true},
     foto: String,
     tags: [String]
 });
