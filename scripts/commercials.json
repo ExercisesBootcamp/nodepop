@@ -4,14 +4,14 @@
     "nombre": "Bicicleta",
     "venta": true,
     "precio": 230.15,
-    "foto": "bici.jpg",
+    "foto": "/public/images/anuncios/bici.png",
     "tags": ["lifestyle", "motor"]
   },
   {
     "nombre": "iPhone 6",
     "venta": false,
     "precio": 50.00,
-    "foto": "iphone.png",
+    "foto": "/public/images/anuncios/iphone.jpg",
     "tags": ["lifestyle", "mobile"]
   }
 ]

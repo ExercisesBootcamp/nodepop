@@ -36,9 +36,18 @@ function install(){
                 }
                 console.log('Deleted users collection');
 
-                // Execute insertData after ensure collections has dropped
-                console.log('------ Starting Insert ------');
-                insertData(db);
+                // Drop tokens collection
+                console.log('Deleting tokens collection');
+                db.collection('tokens').drop(function (err, status) {
+                    if (err) {
+                        console.log('The tokens collection doesn´t exists. Continue installing');
+                    }
+                    console.log('Deleted tokens collection');
+
+                    // Execute insertData after ensure collections has dropped
+                    console.log('------ Starting Insert ------');
+                    insertData(db);
+                });
             });
 
         });
