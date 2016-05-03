@@ -12,6 +12,9 @@
 let jwt = require('jsonwebtoken');
 let config = require('../../../lib/local_config');
 
+// Loading sha256 library
+let sha = require('sha256');
+
 // Loading express and router
 
 let express = require('express');
@@ -29,6 +32,11 @@ let errors = require('../../../lib/errorHandler');
 
 router.post('/', function (req, res, next) {
     let user = new User(req.body);
+
+    // sha256 encoding
+    let shaPass = sha(user.key);
+    user.key = shaPass;
+
     user.save(function (err, saved) {
         if(err){
             next(err);
@@ -44,7 +52,7 @@ router.post('/', function (req, res, next) {
 // Authentication
 router.post('/authenticate', function (req, res) {
     let email = req.body.email;
-    let pass = req.body.key;
+    let pass = sha(req.body.key);
 
 
     User.findOne({email: email}).exec(function(err, user){
