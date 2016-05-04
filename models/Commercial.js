@@ -19,5 +19,20 @@ let commercialSchema = mongoose.Schema({
     tags: [String]
 });
 
-// Assingning schema to model
-mongoose.model('Commercial', commercialSchema);
+// Making a static method
+commercialSchema.statics.list = function (filter, start, limit, sort, cb) {
+    let query = Commercial.find(filter);
+    query.skip(start);
+    query.limit(limit);
+    query.sort(sort);
+
+    // Executing query - returning a promise
+    //console.log(query);
+    return query.exec(cb);
+};
+
+
+
+
+// Assingning schema to model - Using var to use hoisting
+var Commercial = mongoose.model('Commercial', commercialSchema);

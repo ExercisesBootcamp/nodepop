@@ -37,6 +37,14 @@ router.post('/', function (req, res, next) {
     let shaPass = sha(user.key);
     user.key = shaPass;
 
+    // Controlling fields validation
+    try {
+        var errors = user.validateSync();
+    } catch (err){
+        console.log('errors', error);
+        next(err);
+    }
+
     user.save(function (err, saved) {
         if(err){
             next(err);
