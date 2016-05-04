@@ -41,14 +41,43 @@ router.get('/', function (req, res) {
     if(typeof tags !== 'undefined'){
         criteria.tags = tags;
     }
+
+    // Controlling field nombre search with the string
+    // passed in the request
+    if (name){
+
+        let $regex = new RegExp('^' + name, 'i');
+        criteria.nombre = {$regex};
+
+    }
+
+    // Controlling tags search
+    if (tags && tags.length > 0){
+        let $all = tags;
+        criteria.tags = {$all};
+    }
+
+
+    // Controlling if precio data is a range
+    // If it´s, split the values and pass the filter as
+    // variables
     if (precio){
         let number = precio.search('-');
         if (number !== -1) {
             let valores = precio.split('-');
-            let val = parseFloat(valores[0]);
-            let val2 = parseFloat(valores[1]);
-            criteria.val = val;
-            criteria.val2 = val2;
+            let $gte = parseFloat(valores[0]);
+            let $lte = parseFloat(valores[1]);
+
+            // Controling if the range has a max
+            // and a min or only one of them
+
+            if (isNaN($lte)){
+                criteria.precio = {$gte};
+            } else if (isNaN($gte)){
+                criteria.precio = {$lte};
+            } else {
+                criteria.precio = {$gte,$lte};
+            }
 
         } else {
             criteria.precio = parseFloat(precio);

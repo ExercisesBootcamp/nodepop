@@ -25,10 +25,9 @@ commercialSchema.statics.list = function (filter, start, limit, sort, cb) {
     query.skip(start);
     query.limit(limit);
     query.sort(sort);
-    console.log(filter);
-    query.find([{precio: {$gt: filter.val}}, {precio: {$lt: filter.val2}}]);
 
     // Executing query - returning a promise
+    //console.log(query);
     return query.exec(cb);
 };
 
