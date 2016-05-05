@@ -91,6 +91,7 @@ function insertData(db){
 
             // Close connection
             db.close();
+
         });
 
 

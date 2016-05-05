@@ -1,12 +1,12 @@
 [
   {
-    "name": "Juan",
-    "email": "juanarillo@outlook.com",
-    "key": "1234"
+    "name": "Node",
+    "email": "node@node.com",
+    "key": "03ac674216f3e15c761ee1a5e255f067953623c8b388b4459e13f978d7c846f4"
   },
   {
-    "name": "Javier",
-    "email": "juanarillo@gmail.com",
-    "key": "5678"
+    "name": "Mongo",
+    "email": "mongo@mongo.com",
+    "key": "f8638b979b2f4f793ddb6dbd197e0ee25a7a6ea32b0ae22f5e3c5d119d839e75"
   }
 ]
