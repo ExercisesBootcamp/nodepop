@@ -19,15 +19,16 @@ let commercialSchema = mongoose.Schema({
     tags: [String]
 });
 
-// Making a static method
-commercialSchema.statics.list = function (filter, start, limit, sort, cb) {
+// Making a static method for filtering data
+commercialSchema.statics.list = function (filter, start, limit, sort, field, cb) {
     let query = Commercial.find(filter);
     query.skip(start);
     query.limit(limit);
     query.sort(sort);
+    query.select(field);
+
 
     // Executing query - returning a promise
-    //console.log(query);
     return query.exec(cb);
 };
 
