@@ -32,6 +32,7 @@ router.get('/', function (req, res) {
     let start = parseInt(req.query.start) || 0;
     let limit = parseInt(req.query.limit) || null;
     let sort = req.query.sort || null;
+    let field = req.query.field || null;
 
     let criteria = {};
 
@@ -45,8 +46,8 @@ router.get('/', function (req, res) {
         criteria.tags = tags;
     }
 
-    // Controlling field nombre search with the string
-    // passed in the request
+    // Controlling field 'nombre' search with the string
+    // passed in the request. Using a RegExp function for searching
     if (name){
 
         let $regex = new RegExp('^' + name, 'i');
@@ -54,14 +55,16 @@ router.get('/', function (req, res) {
 
     }
 
-    // Controlling tags search
-    if (tags && tags.length > 0){
-        let $all = tags;
-        criteria.tags = {$all};
+    
+    // Controlling tags search in case of more than one
+    // searching option.
+    if (tags && tags[1].length > 1){
+        let $in = tags;
+        criteria.tags = {$in};
     }
 
 
-    // Controlling if precio data is a range
+    // Controlling if 'precio' data is a range
     // If it´s, split the values and pass the filter as
     // variables
     if (precio){
@@ -87,7 +90,8 @@ router.get('/', function (req, res) {
         }
     }
 
-    Commercial.list(criteria, start, limit, sort, function(err, rows){
+    // Passing the query variables to the model function
+    Commercial.list(criteria, start, limit, sort, field, function(err, rows){
         if(err){
             // Returning understable error
             return res.json({success:false, error: err});
