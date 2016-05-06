@@ -12,20 +12,23 @@ let mongoose = require('mongoose');
 
 // Designing Commercial Schema
 let commercialSchema = mongoose.Schema({
-    nombre: {type: String, index: true, required: true},
-    venta: {type: Boolean, index: true, required: true},
-    precio: {type: Number, index: true, required: true},
-    foto: String,
+    name: {type: String, index: true, required: true},
+    sell: {type: Boolean, index: true, required: true},
+    price: {type: Number, index: true, required: true},
+    photo: String,
     tags: [String]
 });
 
 // Making a static method for filtering data
-commercialSchema.statics.list = function (filter, start, limit, sort, field, cb) {
+commercialSchema.statics.list = function (filter, start, limit, sort, field, total, cb) {
     let query = Commercial.find(filter);
     query.skip(start);
     query.limit(limit);
     query.sort(sort);
     query.select(field);
+    if (total){
+        query.count();
+    }
 
 
     // Executing query - returning a promise

@@ -182,10 +182,10 @@ The commercial data model is:
 
 ```js
 {
-    nombre: {type: String, required: true},
-    venta: {type: Boolean, required: true},
-    precio: {type: Number, required: true},
-    foto: String,
+    name: {type: String, required: true},
+    sell: {type: Boolean, required: true},
+    price: {type: Number, required: true},
+    photo: String,
     tags: [String]
 }
 ```
@@ -197,9 +197,9 @@ If the request is correct you will receive a success response:
   "success": true,
   "saved": {
     "__v": 0,
-    "nombre": "Samsung Galaxy",
-    "venta": true,
-    "precio": 253.2,
+    "name": "Samsung Galaxy",
+    "sell": true,
+    "price": 253.2,
     "_id": "572cd8e60cd355cd32c73078",
     "tags": [
       "lifestyle",
@@ -233,27 +233,27 @@ followed by the parameters you want to filter
 
 *2- Selling Commercial or Searching Commercial:*
 
-`http://server_ip:3000/api/v1/commercials?venta=true` for selling
+`http://server_ip:3000/api/v1/commercials?sell=true` for selling
 
-`http://server_ip:3000/api/v1/commercials?venta=false` for searching
+`http://server_ip:3000/api/v1/commercials?sell=false` for searching
 
 *3- Price:*
 
 You can filter price ranges using a '-'
 
-`http://server_ip:3000/api/v1/commercials?precio=100` for the exact value.
+`http://server_ip:3000/api/v1/commercials?price=100` for the exact value.
 
-`http://server_ip:3000/api/v1/commercials?precio=10-60` for range values.
+`http://server_ip:3000/api/v1/commercials?price=10-60` for range values.
 
-`http://server_ip:3000/api/v1/commercials?precio=10-` for 'greater or equal' values.
+`http://server_ip:3000/api/v1/commercials?price=10-` for 'greater or equal' values.
 
-`http://server_ip:3000/api/v1/commercials?precio=-60` for 'lower or equal' values.
+`http://server_ip:3000/api/v1/commercials?price=-60` for 'lower or equal' values.
 
 *4- Name:*
 
-You can filter using the 'nombre' field using a complete match or introducing the first letters of the string you want to find.
+You can filter using the 'name' field using a complete match or introducing the first letters of the string you want to find.
 
-`http://server_ip:3000/api/v1/commercials?nombre=ip` returning all the results beginning from 'ip' either lower or upper case.
+`http://server_ip:3000/api/v1/commercials?na,e=ip` returning all the results beginning from 'ip' either lower or upper case.
 
 *5- Field listing:*
 
@@ -261,7 +261,15 @@ Perhaps you want a list of all the results for one field, use
 
 `http://server_ip:3000/api/v1/commercials?field=tags` returns all the tags.
 
-`http://server_ip:3000/api/v1/commercials?field=nombre` returns all the names of the commercials.
+`http://server_ip:3000/api/v1/commercials?field=name` returns all the names of the commercials.
+
+*6- Counting results:*
+
+If you want to know how many items are with the filter you made, you can use this:
+
+`http://server_ip:3000/api/v1/commercials?total=true` for receiving the total of items in database.
+
+`http://server_ip:3000/api/v1/commercials?name=ip&total=true` for receiving how many items match this filter.
 
 ## API - Push Token
 

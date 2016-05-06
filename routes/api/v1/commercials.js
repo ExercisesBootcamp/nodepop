@@ -25,22 +25,23 @@ let errors = require('../../../lib/errorHandler');
 // Returning data
 
 router.get('/', function (req, res) {
-    let name = req.query.nombre;
-    let venta = req.query.venta;
+    let name = req.query.name;
+    let venta = req.query.sell;
     let tags = req.query.tags;
-    let precio = req.query.precio;
+    let precio = req.query.price;
     let start = parseInt(req.query.start) || 0;
     let limit = parseInt(req.query.limit) || null;
     let sort = req.query.sort || null;
     let field = req.query.field || null;
+    let total = req.query.total || false;
 
     let criteria = {};
 
     if(typeof name !== 'undefined'){
-        criteria.nombre = name;
+        criteria.name = name;
     }
     if(typeof venta !== 'undefined'){
-        criteria.venta = venta;
+        criteria.sell = venta;
     }
     if(typeof tags !== 'undefined'){
         criteria.tags = tags;
@@ -51,7 +52,7 @@ router.get('/', function (req, res) {
     if (name){
 
         let $regex = new RegExp('^' + name, 'i');
-        criteria.nombre = {$regex};
+        criteria.name = {$regex};
 
     }
 
@@ -78,20 +79,20 @@ router.get('/', function (req, res) {
             // and a min or only one of them
 
             if (isNaN($lte)){
-                criteria.precio = {$gte};
+                criteria.price = {$gte};
             } else if (isNaN($gte)){
-                criteria.precio = {$lte};
+                criteria.price = {$lte};
             } else {
-                criteria.precio = {$gte,$lte};
+                criteria.price = {$gte,$lte};
             }
 
         } else {
-            criteria.precio = parseFloat(precio);
+            criteria.price = parseFloat(precio);
         }
     }
 
     // Passing the query variables to the model function
-    Commercial.list(criteria, start, limit, sort, field, function(err, rows){
+    Commercial.list(criteria, start, limit, sort, field, total, function(err, rows){
         if(err){
             // Returning understable error
             return res.json({success:false, error: err});
