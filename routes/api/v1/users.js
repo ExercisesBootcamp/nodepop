@@ -29,17 +29,19 @@ let User = mongoose.model('User');
 let errors = require('../../../lib/errorHandler');
 
 // Adding and saving user´s instance
-
 router.post('/', function (req, res, next) {
     let user = new User(req.body);
 
     // sha256 encoding
+    if (!user.key){
+        errors('key field not fulfilled', res.status(500));
+    }
     let shaPass = sha(user.key);
     user.key = shaPass;
 
     // Controlling fields validation
     try {
-        var errors = user.validateSync();
+        let errors = user.validateSync();
     } catch (err){
         console.log('errors', error);
         next(err);
@@ -47,7 +49,8 @@ router.post('/', function (req, res, next) {
 
     user.save(function (err, saved) {
         if(err){
-            next(err);
+            errors('Some require field is not sended. Please review', res.status(500));
+            //next(err);
             return;
         }
 
