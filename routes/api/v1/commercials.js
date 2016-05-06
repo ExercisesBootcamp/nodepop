@@ -108,7 +108,7 @@ router.post('/', function (req, res, next) {
 
     // Controlling fields validation
     try {
-        var errors = commercial.validateSync();
+        let errors = commercial.validateSync();
     } catch (err){
        console.log('errors', error);
         next(err);
