@@ -34,7 +34,12 @@ router.post('/', function (req, res, next) {
 
     // sha256 encoding
     if (!user.key){
-        errors('key field not fulfilled', res.status(500));
+        let error = new Error();
+        error.message = 'key';
+        error.language = req.lang;
+        error.status = 500;
+        errors(error, res);
+        return;
     }
     let shaPass = sha(user.key);
     user.key = shaPass;
@@ -49,8 +54,11 @@ router.post('/', function (req, res, next) {
 
     user.save(function (err, saved) {
         if(err){
-            errors('Some require field is not sended. Please review', res.status(500));
-            //next(err);
+            let error = new Error();
+            error.message = 'users';
+            error.language = req.lang;
+            error.status = 500;
+            errors(error, res);
             return;
         }
 
@@ -63,21 +71,52 @@ router.post('/', function (req, res, next) {
 // Authentication
 router.post('/authenticate', function (req, res) {
     let email = req.body.email;
-    let pass = sha(req.body.key);
+    let pass = req.body.key;
+
+    if (pass){
+        pass = sha(pass);
+    }
+
 
 
     User.findOne({email: email}).exec(function(err, user){
+
+        // Controlling server error
         if(err){
-            errors('Internal server error', res.status(500));
+            let error = new Error();
+            error.message = 'server';
+            error.language = req.lang;
+            error.status = 500;
+            errors(error, res);
             return;
         }
+
+        // Controlling email field
         if(!email){
-            errors('Authentication failed. User not found', res.status(401));
+            let error = new Error();
+            error.message = 'email';
+            error.language = req.lang;
+            error.status = 401;
+            errors(error, res);
+            return;
+        }
+
+        // Controlling pass field
+        if(!pass){
+            let error = new Error();
+            error.message = 'key';
+            error.language = req.lang;
+            error.status = 401;
+            errors(error, res);
             return;
         }
 
         if(user.key !== pass){
-            errors('Authentication failed. Invaid password', res.status(401));
+            let error = new Error();
+            error.message = 'pwd';
+            error.language = req.lang;
+            error.status = 401;
+            errors(error, res);
             return;
         }
 

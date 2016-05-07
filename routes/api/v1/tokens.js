@@ -27,8 +27,12 @@ let errors = require('../../../lib/errorHandler');
 router.post('/', function (req, res) { 
     let token = new Token(req.body); 
     token.save(function (err, saved) { 
-        if(err){ 
-            errors('Push incomplete. Please review your request', res.status(500)); 
+        if(err){
+            let error = new Error();
+            error.message = 'token';
+            error.language = req.lang;
+            error.status = 500;
+            errors(error, res);
             return;
         }  
         res.json({success: true, saved: saved}); 
@@ -39,7 +43,11 @@ router.put('/', function (req, res) {
     let token = new Token(req.body);
     token.save(function (err, saved) {
         if(err){
-            errors('Push incomplete. Please review your request', res.status(500));
+            let error = new Error();
+            error.message = 'token';
+            error.language = req.lang;
+            error.status = 500;
+            errors(error, res);
             return;
         }
         res.json({success: true, saved: saved});
