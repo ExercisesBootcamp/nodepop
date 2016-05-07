@@ -117,7 +117,11 @@ router.post('/', function (req, res, next) {
 
     commercial.save(function (err, saved) {
         if(err){
-            errors('Validation error. One or more required fields haven´t been inserted', res.status(500));
+            let error = new Error();
+            error.message = 'auth';
+            error.language = req.lang;
+            error.status = 500;
+            errors(error, res);
             return;
         }
 
