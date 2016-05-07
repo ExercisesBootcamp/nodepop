@@ -26,7 +26,7 @@ function install(){
             if (err) {
                 console.log('The commercials collection doesn´t exists. Continue installing');
             }
-            console.log('Deleted commercials collection');
+            console.log('Deleted commercials collection. Status: ' + status);
 
             // Drop users collection
             console.log('Deleting users collection');
@@ -34,7 +34,7 @@ function install(){
                 if (err) {
                     console.log('The users collection doesn´t exists. Continue installing');
                 }
-                console.log('Deleted users collection');
+                console.log('Deleted users collection. Status: ' + status);
 
                 // Drop tokens collection
                 console.log('Deleting tokens collection');
@@ -42,7 +42,7 @@ function install(){
                     if (err) {
                         console.log('The tokens collection doesn´t exists. Continue installing');
                     }
-                    console.log('Deleted tokens collection');
+                    console.log('Deleted tokens collection. Status: ' + status);
 
                     // Execute insertData after ensure collections has dropped
                     console.log('------ Starting Insert ------');
@@ -59,7 +59,7 @@ function install(){
 function insertData(db){
 
     // Requiring filesystem
-    let fs = require("fs");
+    let fs = require('fs');
 
     // Reading commercial JSON
     fs.readFile(__dirname + '/commercials.json', 'utf8', function (err, data) {
@@ -72,7 +72,7 @@ function insertData(db){
         console.log ('Inserting Commercials');
         db.collection('commercials').insert(json, function (err, doc) {
             if (err) throw err;
-            console.log('Commercials added');
+            console.log('Commercials added. Data: ' + doc);
         });
     });
 
@@ -87,7 +87,7 @@ function insertData(db){
         console.log ('Inserting Users');
         db.collection('users').insert(json, function (err, doc) {
             if (err) throw err;
-            console.log ('Users added');
+            console.log ('Users added. Data: ' + doc);
 
             // Close connection
             db.close();
