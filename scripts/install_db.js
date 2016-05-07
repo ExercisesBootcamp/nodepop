@@ -70,9 +70,9 @@ function insertData(db){
 
         // Inserting data into database
         console.log ('Inserting Commercials');
-        db.collection('commercials').insert(json, function (err, doc) {
+        db.collection('commercials').insert(json, function (err) {
             if (err) throw err;
-            console.log('Commercials added. Data: ' + doc);
+            console.log('Commercials added.');
         });
     });
 
@@ -85,9 +85,9 @@ function insertData(db){
 
         // Inserting data into database
         console.log ('Inserting Users');
-        db.collection('users').insert(json, function (err, doc) {
+        db.collection('users').insert(json, function (err) {
             if (err) throw err;
-            console.log ('Users added. Data: ' + doc);
+            console.log ('Users added.');
 
             // Close connection
             db.close();
