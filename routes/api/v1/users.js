@@ -48,7 +48,7 @@ router.post('/', function (req, res, next) {
     try {
         let errors = user.validateSync();
     } catch (err){
-        console.log('errors', error);
+        console.log('errors', errors);
         next(err);
     }
 
@@ -121,7 +121,7 @@ router.post('/authenticate', function (req, res) {
         }
 
         let token = jwt.sign({id: user._id}, config.jwt.secret, {
-            expiresIn: "2 days"
+            expiresIn: '2 days'
         });
 
         res.json({success: true, token: token});
