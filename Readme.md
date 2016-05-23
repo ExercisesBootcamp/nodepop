@@ -2,6 +2,16 @@
 
   API service for IOs and Android of second hands article´s selling.  
   Final [node](http://nodejs.org) module practise, using also [express](https://github.com/expressjs/express) framework and [mongoDB](https://www.mongodb.com/) database.
+  
+## Deployment server
+
+An instance of nodepop is deploy at the server:
+
+`public DNS: http://ec2-52-204-6-150.compute-1.amazonaws.com/` 
+`Elastic IP: 52.204.6.150`
+
+An image example at route:  
+`http://ec2-52-204-6-150.compute-1.amazonaws.com/images/anuncios/iphone.jpg`
 
 ## Previous Requirement
 
@@ -54,7 +64,7 @@ $ cd <mongoDB_directory>
 - Now write the next instruction:
 
 ```bash
-$ bin\mongodb --dbpath ./data/db --directoryperdb
+$ bin/mongod --dbpath ./data/db --directoryperdb
 ```
 
 In this moment mongoDB is running, listening by default at `port=27017`
