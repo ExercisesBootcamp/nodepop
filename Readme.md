@@ -7,7 +7,7 @@
 
 An instance of nodepop is deploy at the server:
 
-`public DNS: http://ec2-52-204-6-150.compute-1.amazonaws.com/` 
+`public DNS: http://ec2-52-204-6-150.compute-1.amazonaws.com/`   
 `Elastic IP: 52.204.6.150`
 
 An image example at route:  
