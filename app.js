@@ -41,6 +41,9 @@ app.use((req, res, next) => {
 //app.use('/', routes);
 //app.use('/users', users);
 
+// Index route
+app.use('/', require('./routes/index'));
+
 // Loading API routes
 app.use('/api/v1/commercials', require('./routes/api/v1/commercials'));
 app.use('/api/v1/users', require('./routes/api/v1/users'));
